@@ -1,0 +1,45 @@
+
+  .user-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  .user-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .navbar {
+    margin-bottom: 20px;
+  }
+
+  #taskList tr td {
+    vertical-align: middle;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,0.05);
+  }
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emoji-badge {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.dashboard-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }

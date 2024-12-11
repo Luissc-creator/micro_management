@@ -1,0 +1,20 @@
+body {
+  background-color: #f4f6f9;
+}
+
+.card {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: none;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+#taskList tr td {
+  vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0,0,0,0.05);
+}
