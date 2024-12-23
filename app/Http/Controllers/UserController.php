@@ -39,17 +39,7 @@ class UserController extends Controller
             // Add other necessary fields if needed
         ]);
 
-        if ($request->role === 'client') {
-            Client::create([
-                'user_id' => $user->id,  // Reference to the User table
-                // Add other Client-specific data here
-            ]);
-        } elseif ($request->role === 'operator') {
-            Operator::create([
-                'user_id' => $user->id,  // Reference to the User table
-                // Add other Operator-specific data here
-            ]);
-        }
+        $this->RoleCreate($user);
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'User created successfully!');
@@ -77,16 +67,33 @@ class UserController extends Controller
 
         // Find the user by ID
         $user = User::findOrFail($id);
-
+        $password = $user->password;
+        $user->delete();
         // Update the user
-        $user->update([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
+            'password' => $password,
         ]);
-
+        $this->RoleCreate($user);
         // Redirect with success message
         return back()->with('success', 'User updated successfully!');
+    }
+
+    static function RoleCreate($user)
+    {
+        if ($user->role === 'client') {
+            Client::create([
+                'user_id' => $user->id,  // Reference to the User table
+                // Add other Client-specific data here
+            ]);
+        } elseif ($user->role === 'operator') {
+            Operator::create([
+                'user_id' => $user->id,  // Reference to the User table
+                // Add other Operator-specific data here
+            ]);
+        }
     }
 
     // Delete a user

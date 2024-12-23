@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Communication;
 use Illuminate\Http\Request;
 use App\Models\UserRequest;
 use App\Models\Project;
 use Illuminate\Support\Carbon;
 use App\Models\Task;
+use App\Models\Client;
+use App\Models\SupportTicket;
 
 class ClientController extends Controller
 {
@@ -25,18 +28,32 @@ class ClientController extends Controller
             $project->hoursWorked = $createdAt->diffInHours($now);
             $project->remainedDays = $now->diffInDays($deadline);
         }
-        $currentProject = $activeProjects[$currentProjectIndex];
+        if (isset($currentProjectIndex)) {
+            $currentProject = NULL;
+            $tasks = NULL;
+            $total_task_count = NULL;
+            $completed_tasks_count = NULL;
+            $project_progress = NULL;
+            $requests = NULL;
+            $client = NULL;
+            $communications = NULL;
+            $tickets = NULL;
+        } else {
+            $currentProject = $activeProjects[$currentProjectIndex];
+            $tasks = Task::where('project_id', $currentProject->id)
+                ->get();
+            $total_task_count = $tasks->count();
+            $completed_tasks_count = Task::where('project_id', $currentProject->id)
+                ->where('status', 'completed')->count();
+            $project_progress = $total_task_count == 0 ? 0 : $completed_tasks_count * 100 / $total_task_count;
+            $requests = UserRequest::where('client_id', $clientId)->where('status', 'pending')->get();
+            $client = Client::where('id', $clientId)->first();
+            $communications = Communication::where('sender_id', $client->user->id)->get();
+            $tickets = SupportTicket::where('client_id', $clientId)->get();
+        }
 
-        $tasks = Task::where('project_id', $currentProject->id)
-            ->get();
-        $total_task_count = $tasks->count();
-        $completed_tasks_count = Task::where('project_id', $currentProject->id)
-            ->where('status', 'completed')->count();
-        $project_progress = $total_task_count == 0 ? 0 : $completed_tasks_count * 100 / $total_task_count;
-        logger('client_id:::' . $clientId);
-        $requests = UserRequest::where('client_id', $clientId)->where('status', 'pending')->get();
-        logger('requests:::: ' . json_encode($requests));
-        return view('client.area', compact('activeProjects', 'currentProjectIndex', 'tasks', 'project_progress', 'requests'));
+
+        return view('client.area', compact('activeProjects', 'currentProjectIndex', 'tasks', 'project_progress', 'requests', 'communications', 'tickets'));
     }
 
     public function markTaskAsCompleted(Task $task)

@@ -10,11 +10,11 @@ class SupportTicket extends Model
 
     public function client()
     {
-        return $this->belongsTo(User::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     public function operator()
     {
-        return $this->belongsTo(User::class, 'operator_id');
+        return $this->belongsTo(Operator::class, 'operator_id');
     }
 }

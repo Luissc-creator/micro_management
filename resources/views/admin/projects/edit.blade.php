@@ -80,7 +80,6 @@
             <!-- Edit Project Form -->
             <form action="{{ route('projects.update', $project->id) }}" method="POST">
                 @csrf
-                @method('PUT')
 
                 <!-- Project Title Section -->
                 <div class="section-header">

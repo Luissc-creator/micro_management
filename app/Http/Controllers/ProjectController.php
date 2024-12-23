@@ -31,9 +31,11 @@ class ProjectController extends Controller
 
     public function create()
     {
+        logger('create fuction started!!!!!!!!');
         // Fetch clients and operators for project assignment
         $clients = Client::with('user')->get();
         $operators = Operator::with('user')->get();
+        logger('projects creation page');
         return view('admin.projects.create', compact('clients', 'operators'));
     }
 
@@ -58,10 +60,11 @@ class ProjectController extends Controller
         //     Mail::to($recipient->user->email)->send(new CustomNotificationMail($template->subject, $template->body, $project));
         // }
 
-        ActivityLog::create([
-            'user_id' => session('user_id'),
-            'action' => 'project created',
-        ]);
+        // @ activicty log 
+        // ActivityLog::create([
+        //     'user_id' => session('user_id'),
+        //     'action' => 'project created',
+        // ]);
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
@@ -174,8 +177,8 @@ class ProjectController extends Controller
 
         // Count open requests/tickets and calculate buffer time
         $openRequestsCount = Request::where('project_id', $projectId)
-                                    ->where('status', 'pending_client')
-                                    ->count();
+            ->where('status', 'pending_client')
+            ->count();
         $bufferTime = $openRequestsCount * 2; // 2 days per open request
 
         // Calculate the final project deadline

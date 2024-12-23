@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Task;
 use App\Models\DailyReport;
 use App\Models\Operator;
+use App\Models\SupportTicket;
 use App\Models\User;
 use App\Notifications\TaskCompletionNotification;
 
@@ -58,11 +59,12 @@ class OperatorController extends Controller
             // ->where('operator_id', $operatorId)
             ->get();
         $total_task_count = $tasks->count();
+        $tickets = SupportTicket::where('operator_id', session('operator_id'))->get();
         // $completed_tasks_count = Task::where('project_id', $currentProject->id)
         //     ->where('operator_id', $operatorId)->where('status', 'completed')->count();
         // $project_progress = $total_task_count == 0 ? 0 : $completed_tasks_count * 100 / $total_task_count;
 
-        return view('operator.area', compact('activeProjects', 'currentProjectIndex', 'tasks', 'operator'));
+        return view('operator.area', compact('activeProjects', 'currentProjectIndex', 'tasks', 'operator', 'tickets'));
     }
 
     public function submitDailyReport(Request $request)

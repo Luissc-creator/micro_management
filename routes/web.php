@@ -47,7 +47,7 @@ Route::post('/admin/add-user', [UserController::class, 'store'])->name('admin.ad
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.userList');
 Route::get('/admin/edit-user/{id}', [UserController::class, 'edit'])->name('admin.editUser');
 Route::post('/admin/update-user/{id}', [UserController::class, 'update'])->name('admin.updateUser');
-Route::get('projects/{id}', [AdminController::class, 'showProject'])->name('projects.show');
+Route::get('projects/{id}/show', [AdminController::class, 'showProject'])->name('projects.show');
 
 // Route to delete user
 Route::post('/admin/delete-user/{id}', [UserController::class, 'destroy'])->name('admin.deleteUser');
@@ -111,10 +111,8 @@ use App\Http\Controllers\SupportTicketController;
 
 Route::get('/operators_list', [SupportTicketController::class, 'getOperators'])->name('operators.list');
 Route::post('/supportsTickets/store', [SupportTicketController::class, 'store'])->name('tickets.store');
-Route::get('/supportsTickets/create', function () {
-    return view('tickets.create');
-})->name('tickets.create');
-Route::get('/supportsTickets/index', [SupportTicketController::class, 'showAll'])->name('tickets.index');
+Route::get('/supportsTickets/create', [SupportTicketController::class, 'create'])->name('tickets.create');
+Route::get('/supportsTickets/{operator_id}/index', [SupportTicketController::class, 'showAll'])->name('tickets.index');
 
 
 

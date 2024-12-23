@@ -54,7 +54,7 @@ class CommunicationController extends Controller
         if ($request->ajax()) {
             return response()->json(['message' => $message->load('sender')]);
         }
-        return redirect()->back()->with('success', 'Message sent successfully!');
+        return redirect()->route('communications.store', session('userId'));
     }
 
     public function list($userId)

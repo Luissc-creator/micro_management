@@ -87,7 +87,7 @@
                     </div>
                     <div class="card-body">
                         <a class="btn btn-primary mb-2 w-100" href='{{ route('admin.projectReports') }}'>Project Reports</a>
-                        <a class="btn btn-secondary mb-2 w-100" href='{{ route('admin.useraReports') }}'>User Reports</a>
+                        <a class="btn btn-secondary mb-2 w-100" href='{{ route('admin.userReports') }}'>User Reports</a>
                         <a href="{{ route('projects.export') }}" class="btn btn-warning w-100">Export Projects to XLS</a>
                     </div>
                 </div>

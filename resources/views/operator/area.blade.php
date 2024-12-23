@@ -289,13 +289,16 @@
                     </div>
                     <div class="card-body">
                         <div class="list-group" id="clientTicketsList">
-                            <a href={{ route('tickets.index') }} class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">🔴 System Error</h5>
-                                    <small class="text-muted">Closed</small>
-                                </div>
-                                <p class="mb-1">Error during client login</p>
-                            </a>
+                            @foreach ($tickets as $ticket)
+                                <a href={{ route('tickets.index', session('operator_id')) }}
+                                    class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ $ticket->subject }}</h5>
+                                        <small class="text-muted">{{ $ticket->status }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ $ticket->description }}</p>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
